@@ -1,0 +1,139 @@
+{
+  "info": {
+    "_postman_id": "banca-api-collection",
+    "name": "Banca API",
+    "description": "Colección Postman para Clients y Accounts microservicios con datos de prueba pre-cargados",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Clients Service",
+      "item": [
+        {
+          "name": "List Clients",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/clients", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["clients"] }
+          }
+        },
+        {
+          "name": "Get Client by ID (ID=1)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/clients/1", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["clients", "1"] }
+          }
+        },
+        {
+          "name": "Create Client (Triggers Account Creation)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nuevo Cliente\",\n  \"gender\": \"Male\",\n  \"age\": 28,\n  \"identification\": \"1234567890\",\n  \"address\": \"Calle Falsa 123\",\n  \"phone\": \"0987654321\",\n  \"password\": \"abcd1234\",\n  \"status\": true\n}"
+            },
+            "url": { "raw": "http://localhost:8082/clients", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["clients"] }
+          }
+        },
+        {
+          "name": "Update Client (ID=1)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Cliente Demo Modificado\",\n  \"gender\": \"Male\",\n  \"age\": 36,\n  \"identification\": \"998877\",\n  \"address\": \"Main Street 456\",\n  \"phone\": \"0998887777\",\n  \"password\": \"nueva123\",\n  \"status\": true\n}"
+            },
+            "url": { "raw": "http://localhost:8082/clients/1", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["clients", "1"] }
+          }
+        },
+        {
+          "name": "Delete Client (ID=1)",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "http://localhost:8082/clients/1", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["clients", "1"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Accounts Service",
+      "item": [
+        {
+          "name": "List Accounts",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/accounts", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["accounts"] }
+          }
+        },
+        {
+          "name": "Get Account by ID (ID=1)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/accounts/1", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["accounts", "1"] }
+          }
+        },
+        {
+          "name": "Create Transaction - Deposit (ACC001)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"transactionType\": \"deposit\",\n  \"value\": 150\n}"
+            },
+            "url": { "raw": "http://localhost:8083/transactions", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["transactions"] }
+          }
+        },
+        {
+          "name": "Create Transaction - Withdraw (ACC001)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"transactionType\": \"withdraw\",\n  \"value\": 50\n}"
+            },
+            "url": { "raw": "http://localhost:8083/transactions", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["transactions"] }
+          }
+        },
+        {
+          "name": "Get Report (By Account ID=1)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8083/transactions/report?start=2025-08-01T00:00:00&end=2025-08-05T23:59:59&accountId=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["transactions", "report"],
+              "query": [
+                { "key": "start", "value": "2025-08-01T00:00:00" },
+                { "key": "end", "value": "2025-08-05T23:59:59" },
+                { "key": "accountId", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Statement (F4 - Client ID=1)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8083/transactions/statement?start=2025-08-01T00:00:00&end=2025-08-05T23:59:59&clientId=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8083",
+              "path": ["transactions", "statement"],
+              "query": [
+                { "key": "start", "value": "2025-08-01T00:00:00" },
+                { "key": "end", "value": "2025-08-05T23:59:59" },
+                { "key": "clientId", "value": "1" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
